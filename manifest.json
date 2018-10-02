@@ -1,6 +1,6 @@
 {
-  "name": "Weather",
-  "short_name": "Weather",
+  "name": "Local",
+  "short_name": "Localizacao",
   "icons": [
     {
       "src": "images/icons/icon-128x128.png",
