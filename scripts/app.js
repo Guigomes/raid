@@ -12,59 +12,78 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-(function() {
-  "use strict";
+(function () {
+   "use strict";
 
-  angular.module("app", []);
+   angular.module("app", ['ngMaterial', 'ngAnimate']);
 
-  angular.module("app").controller("LocationController", LocationController);
+   angular.module("app").config(function ($mdThemingProvider) {
+      $mdThemingProvider.theme('default')
+         .primaryPalette('red')
+         .accentPalette('blue');
+   });
 
-  function LocationController(Ginasios) {
-    var vm = this;
-    vm.go = go;
+   angular.module("app").controller("LocationController", LocationController);
 
-    try {
-      vm.locais = Ginasios.getGinasios();
+   function LocationController(Ginasios, $mdToast) {
+      var vm = this;
+      vm.go = go;
 
-      vm.localSelecionado = vm.locais[0];
-    } catch (err) {
-      alert(err);
-    }
-    function go() {
-      if (vm.codigoLocal !== undefined && vm.codigoLocal > 0) {
-         vm.localSelecionado  = vm.locais.find(item => item.codigo === vm.codigoLocal);                 
+      try {
+         vm.locais = Ginasios.getGinasios();
+
+         vm.localSelecionado = vm.locais[0];
+      } catch (err) {
+         alert(err);
       }
-      mapsSelector(vm.localSelecionado.lat, vm.localSelecionado.long, vm.localSelecionado.nome);
-    }
+      function go() {
 
-    function mapsSelector(lat, long,nome) {
-      if (
-        /* if we're on iOS, open in Apple Maps */
-        navigator.platform.indexOf("iPhone") != -1 ||
-        navigator.platform.indexOf("iPod") != -1 ||
-        navigator.platform.indexOf("iPad") != -1
-      )
-        window.open(
-          "maps://maps.google.com/maps?daddr=" +
-            lat +
-            ", + " +
-            long +
-            "&amp;ll="
-        );
+         if (vm.codigoLocal !== undefined && vm.codigoLocal > 0) {
+
+            vm.localSelecionado = vm.locais.find(item => item.codigo == vm.codigoLocal);
+
+         }
+
+         if (vm.localSelecionado !== undefined) {
+
+            mapsSelector(vm.localSelecionado.lat, vm.localSelecionado.long, vm.localSelecionado.nome);
+         } else {
+            $mdToast.show(
+               $mdToast.simple()
+                  .textContent('Não foi encontrao um ginásio com o código ' + vm.codigoLocal)
+                  .position('bottom')
+                  .hideDelay(3000));
+         }
+      }
+
+      function mapsSelector(lat, long, nome) {
+         if (
+            /* if we're on iOS, open in Apple Maps */
+            navigator.platform.indexOf("iPhone") != -1 ||
+            navigator.platform.indexOf("iPod") != -1 ||
+            navigator.platform.indexOf("iPad") != -1
+         )
+            window.open(
+               "maps://maps.google.com/maps?daddr=" +
+               lat +
+               ", + " +
+               long +
+               "&amp;ll="
+            );
       /* else use Google */ else
-      /*
-        window.open(
-          "https://maps.google.com/maps?daddr=" +
-            lat +
-            ", + " +
-            long +
-            "&amp;ll="
-        );
-        */
-       window.open(
-         "https://maps.google.com/maps?q=" + lat + ", + " + long + "(" + nome + ")&amp;ll="
-       );
-       
-    }
-  }
+            /*
+              window.open(
+                "https://maps.google.com/maps?daddr=" +
+                  lat +
+                  ", + " +
+                  long +
+                  "&amp;ll="
+              );
+              */
+            window.open(
+               "https://maps.google.com/maps?q=" + lat + ", + " + long + "(" + nome + ")&amp;ll="
+            );
+
+      }
+   }
 })();
