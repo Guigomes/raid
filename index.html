@@ -20,6 +20,7 @@
 <head>
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="scripts/app.js"></script>
+  <script src="scripts/ginasios.factory.js"></script>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -74,24 +75,24 @@
 
 <body ng-app="app" ng-controller="LocationController as vm">
 
-
-  <main class="main">
-    <header class="header">
-      <h1 class="header__title">Mapa de Águas Claras</h1>
+   <header class="header">
+      <h1 class="header__title">Ginásios de Águas Claras</h1>
 
     </header>
-    <img src="images/mapa_cima.jpg" style="width: 100%; height:90%;" ng-show="false" />
-    <img src="images/mapa_baixo.jpg" style="width: 100%; height:90%;" />
+  <main class="main">
+   
+    <img src="images/mapa_cima.jpg" style="width: 100%;" ng-show="false" />
+    <img src="images/mapa_baixo.jpg" style="width: 100%;" />
 
     <div class="card">
       <div class="card-header" style="font-weight: bold; background-color:#ba2f2f; ">Selecione o ginásio desejado ou digite o código</div>
 
       <form ng-submit="vm.go()">
+         <select ng-change="vm.codigoLocal = vm.localSelecionado.codigo" ng-model="vm.localSelecionado" ng-options="local.codigo + ' - ' + local.nome for local in vm.locais"></select>      
+        
+        <br/>
 
         <input type="number" style="width: 50px;" ng-model="vm.codigoLocal" />
-        <select ng-change="vm.codigoLocal = vm.localSelecionado.codigo" ng-model="vm.localSelecionado" ng-options="local.nome for local in vm.locais"></select>
-
-
         <button class="button-go"></button>
       </form>
     </div>

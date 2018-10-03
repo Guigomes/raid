@@ -19,31 +19,12 @@
 
   angular.module("app").controller("LocationController", LocationController);
 
-  function LocationController() {
+  function LocationController(Ginasios) {
     var vm = this;
     vm.go = go;
 
     try {
-      vm.locais = [
-        {
-          codigo: 29,
-          nome: "Rei Cósmico",
-          lat: "-15.83107586",
-          long: "-48.01530726"
-        },
-        {
-          codigo: 30,
-          nome: "Fonte Vida / Vila Carioca",
-          lat: "-15.8292331",
-          long: "-48.01438887"
-        },
-        {
-          codigo: 31,
-          nome: "Biblioteca de Águas Claras",
-          lat: "-15.8341757",
-          long: "-48.01282258"
-        }
-      ];
+      vm.locais = Ginasios.getGinasios();
 
       vm.localSelecionado = vm.locais[0];
     } catch (err) {
@@ -51,16 +32,12 @@
     }
     function go() {
       if (vm.codigoLocal !== undefined && vm.codigoLocal > 0) {
-        mapsSelector(
-          vm.locais[vm.codigoLocal - 1].lat,
-          vm.locais[vm.codigoLocal - 1].long
-        );
-      } else {
-        mapsSelector(vm.localSelecionado.lat, vm.localSelecionado.long);
+         vm.localSelecionado  = vm.locais.find(item => item.codigo === vm.codigoLocal);                 
       }
+      mapsSelector(vm.localSelecionado.lat, vm.localSelecionado.long, vm.localSelecionado.nome);
     }
 
-    function mapsSelector(lat, long) {
+    function mapsSelector(lat, long,nome) {
       if (
         /* if we're on iOS, open in Apple Maps */
         navigator.platform.indexOf("iPhone") != -1 ||
@@ -75,6 +52,7 @@
             "&amp;ll="
         );
       /* else use Google */ else
+      /*
         window.open(
           "https://maps.google.com/maps?daddr=" +
             lat +
@@ -82,6 +60,11 @@
             long +
             "&amp;ll="
         );
+        */
+       window.open(
+         "https://maps.google.com/maps?q=" + lat + ", + " + long + "(" + nome + ")&amp;ll="
+       );
+       
     }
   }
 })();
