@@ -15,61 +15,73 @@
 (function() {
   "use strict";
 
-  angular.module('app', []);
+  angular.module("app", []);
 
-  angular.module('app').controller('LocationController', LocationController);
+  angular.module("app").controller("LocationController", LocationController);
 
-  function LocationController(){
-     
-   var vm = this;
-   vm.go = go;
+  function LocationController() {
+    var vm = this;
+    vm.go = go;
 
-   
-   try{
+    try {
+      vm.locais = [
+        {
+          codigo: 29,
+          nome: "Rei Cósmico",
+          lat: "-15.83107586",
+          long: "-48.01530726"
+        },
+        {
+          codigo: 30,
+          nome: "Fonte Vida / Vila Carioca",
+          lat: "-15.8292331",
+          long: "-48.01438887"
+        },
+        {
+          codigo: 31,
+          nome: "Biblioteca de Águas Claras",
+          lat: "-15.8341757",
+          long: "-48.01282258"
+        }
+      ];
 
-   vm.locais = [{
-
-      codigo: 1, 
-      nome: "TESTE1",
-      lat: "-15.8113863",
-      long: "-47.95941841"
-   }, 
-   {
-
-      codigo: 2, 
-      nome: "TESTE2",
-      lat: "-15.835016",
-      long: "-48.278433"
-   }
-    
-   ];
-   
-   vm.localSelecionado = vm.locais[0];
-
-}catch(err){
-alert(err);
-}
-   function go(){
-
-      if(vm.codigoLocal !== undefined && vm.codigoLocal > 0){
-         mapsSelector( vm.locais[vm.codigoLocal - 1].lat,  vm.locais[vm.codigoLocal - 1].long);
-      }else{
-      mapsSelector( vm.localSelecionado.lat,  vm.localSelecionado.long);
+      vm.localSelecionado = vm.locais[0];
+    } catch (err) {
+      alert(err);
+    }
+    function go() {
+      if (vm.codigoLocal !== undefined && vm.codigoLocal > 0) {
+        mapsSelector(
+          vm.locais[vm.codigoLocal - 1].lat,
+          vm.locais[vm.codigoLocal - 1].long
+        );
+      } else {
+        mapsSelector(vm.localSelecionado.lat, vm.localSelecionado.long);
       }
-   }
-    
-    function mapsSelector(lat, long) {
-     if /* if we're on iOS, open in Apple Maps */
-       ((navigator.platform.indexOf("iPhone") != -1) || 
-        (navigator.platform.indexOf("iPod") != -1) || 
-        (navigator.platform.indexOf("iPad") != -1))
-       window.open("maps://maps.google.com/maps?daddr=" + lat +", + " + long + "&amp;ll=");
-   
-     else /* else use Google */
-       window.open("https://maps.google.com/maps?daddr=" + lat +", + " + long + "&amp;ll=");
-   }
-  
-  
-}
+    }
 
+    function mapsSelector(lat, long) {
+      if (
+        /* if we're on iOS, open in Apple Maps */
+        navigator.platform.indexOf("iPhone") != -1 ||
+        navigator.platform.indexOf("iPod") != -1 ||
+        navigator.platform.indexOf("iPad") != -1
+      )
+        window.open(
+          "maps://maps.google.com/maps?daddr=" +
+            lat +
+            ", + " +
+            long +
+            "&amp;ll="
+        );
+      /* else use Google */ else
+        window.open(
+          "https://maps.google.com/maps?daddr=" +
+            lat +
+            ", + " +
+            long +
+            "&amp;ll="
+        );
+    }
+  }
 })();
