@@ -62,6 +62,7 @@ body {
   align-content: stretch;
   background: #ececec;
 }
+
 .button-go {
   background-image: url(../images/go.png);
   background-repeat: no-repeat;
@@ -75,16 +76,15 @@ body {
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 9px 1px rgba(0, 0, 0, 0.12),
     0 4px 2px -2px rgba(0, 0, 0, 0.2);
 }
-.small{
-   height: 32px !important; 
+.small {
+  height: 32px !important;
 }
-.toolbar-small{
-   height: 32px !important; 
-   min-height: 32px !important;
-   max-height: 32px !important;
-   background: #ba2f2f !important;
-font-weight: bold !important;
-
+.toolbar-small {
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  background: #ba2f2f !important;
+  font-weight: bold !important;
 }
 .header {
   width: 100%;
@@ -280,8 +280,6 @@ font-weight: bold !important;
 }
 
 .main {
-   
-  
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
